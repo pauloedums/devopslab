@@ -8,13 +8,14 @@ language: python
 python:
   - "3.8"
 
-# Instalação de Módulos que são necessários para a Aplicação.
-install:
-  - pip install flask pytest flask-wtf
+# Instalação de Módulos que são necessários para a Aplicação.                                                                                     
+install:     
+  - pip install flask flask-wtf coverage                                                                                                          
 
-# Defini o script de Teste que deve rodar toda vez que o código for alterado.
-script:
-  - python -m unittest -v test || travis_terminate 1;
+# Defini o script de Teste que deve rodar toda vez que o código for alterado.                                                                     
+script:                                                                                                                                           
+  - coverage report app.py || travis_terminate 1;
+  - coverage xml app.py || travis_terminate 1;
   - sonar-scanner || travis_terminate 1;
 
 # Definir o Deploy no Heroku
