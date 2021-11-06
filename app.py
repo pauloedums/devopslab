@@ -11,4 +11,3 @@ def pagina_inicial():
 
 if __name__ == '__main__':
     app.run()
-$ vim .travis.yml
