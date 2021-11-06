@@ -47,4 +47,4 @@ jobs:
     - stage: Stage Test
       name: GET URL Stage
       script:
-        - curl https://devopslab-paulomarques.herokuapp.com/ | grep Laboratório Pipeline DevOps || travis_terminate 1;
+        - curl https://devopslab-paulomarques.herokuapp.com/ | grep Lab || travis_terminate 1;
