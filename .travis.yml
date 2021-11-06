@@ -43,3 +43,8 @@ jobs:
         app: devopslab-paulomarques
         on:
           branch: main
+
+    - stage: Stage Test
+      name: GET URL Stage
+      script:
+        - curl https://devopslab-paulomarques.herokuapp.com/ | grep Laboratório Pipeline DevOps || travis_terminate 1;
