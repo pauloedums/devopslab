@@ -1,6 +1,3 @@
-# Versão do Ubuntu
-dist: focal
-
 # Linguagem Utilizada para Desenvolver a Aplicação
 language: python
 
@@ -8,26 +5,41 @@ language: python
 python:
   - "3.8"
 
-# Instalação de Módulos que são necessários para a Aplicação.                                                                                     
-install:     
-  - pip install flask flask-wtf coverage                                                                                                          
+# Versão do Ubuntu
+dist: focal
+os: linux
 
-# Defini o script de Teste que deve rodar toda vez que o código for alterado.                                                                     
-script:                                                                                                                                           
-  - coverage report app.py || travis_terminate 1;
-  - coverage xml app.py || travis_terminate 1;
-  - sonar-scanner || travis_terminate 1;
-
-# Definir o Deploy no Heroku
-deploy:
-  provider: heroku
-  api_key: $HEROKU_API_KEY
-  edge: true 
-  app: devopslab-paulomarques
-  on:
-      branch: main
 addons:
   sonarcloud:
     organization: pauloedums
-    token: $SONAR_TOKEN
+    token: ${SONAR_TOKEN}
 
+jobs:
+  include:
+    - stage: Build & Tests
+      name: "Unit Test, Quality & Security"
+
+      # Instalação de Módulos que são necessários para a Aplicação.
+      install:
+        - pip install flask flask-wtf coverage
+
+      # Defini o script de Teste que deve rodar toda vez que o código for alterado.
+      script:
+        - coverage run test.py || travis_terminate 1;
+        - coverage report app.py || travis_terminate 1;
+        - coverage xml app.py || travis_terminate 1;
+        - sonar-scanner || travis_terminate 1;
+
+    - stage: Stage Deploy
+      name: Heroku Deploy
+      script: skip
+
+      # Definir o Deploy no Heroku
+      deploy:
+        provider: heroku
+        strategy: api
+        api_key: $HEROKU_API_KEY
+        edge: true
+        app: devopslab-paulomarques
+        on:
+          branch: main
