@@ -48,3 +48,20 @@ jobs:
       name: GET URL Stage
       script:
         - curl https://devopslab-paulomarques.herokuapp.com/ | grep Lab || travis_terminate 1;
+
+    - stage: Production Deploy
+      name: Google Api Engine
+      script: skip
+
+      # Definir o Deploy no Google Cloud
+      deploy:
+        provider: gae
+        keyfile: ../gcpkey.json
+        project: lab-devops-cloud-paulomarques
+        on:
+          branch: main
+
+    - stage: Production Test
+      name: GET URL Production
+      script:
+        - curl https://lab-devops-cloud-paulomarques.uc.r.appspot.com/ | grep Lab || travis_terminate 1;

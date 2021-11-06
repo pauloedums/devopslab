@@ -1,0 +1,14 @@
+# This file specifies files that are *not* uploaded to Google Cloud Platform
+# using gcloud.
+
+.gcloudignore
+.git
+.gitignore
+
+# Python pycache:
+__pycache__/
+
+# Ignored by the build system
+/setup.cfg
+
+sonar-project.properties
