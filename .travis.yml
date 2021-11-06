@@ -14,10 +14,6 @@ addons:
     organization: pauloedums
     token: ${SONAR_TOKEN}
 
-before_install:
-        - openssl aes-256-cbc -K $encrypted_4e798a0779bf_key -iv $encrypted_4e798a0779bf_iv -in ../gcpkey.json.enc -out ../gcpkey.json -d
-
-
 jobs:
   include:
     - stage: Build & Tests
@@ -56,6 +52,9 @@ jobs:
     - stage: Production Deploy
       name: Google Api Engine
       script: skip
+      before_install:
+        - openssl aes-256-cbc -K $encrypted_4e798a0779bf_key -iv $encrypted_4e798a0779bf_iv -in ../gcpkey.json.enc -out ../gcpkey.json -d
+
 
       # Definir o Deploy no Google Cloud
       deploy:
