@@ -57,11 +57,11 @@ jobs:
       deploy:
         provider: gae
         keyfile: ../gcpkey.json
-        project: lab-devops-cloud-paulomarques
+        project: devops-cloud-paulomarques
         on:
           branch: main
 
     - stage: Production Test
       name: GET URL Production
       script:
-        - curl https://lab-devops-cloud-paulomarques.uc.r.appspot.com/ | grep Lab || travis_terminate 1;
+        - curl https://devops-cloud-paulomarques.uc.r.appspot.com/ | grep Lab || travis_terminate 1;
